@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+    	
+    	var myStyle = {
+    			fontSize: 100,
+    			color: '#FF0000'
+			};	
+    	
+		var Test = React.createClass({
+		        render: function() {
+		          return (
+										<div style={myStyle}>
+											<div>
+												<div>content</div>
+											</div>
+										</div>
+		          );
+		        }
+		      });
+    	
+      ReactDOM.render(
+       	<Test />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
