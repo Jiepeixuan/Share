@@ -1,7 +1,7 @@
 var HelloMessage = React.createClass({
 	
 	getInitialState:function(){
-		return{name:"state"};
+		return{name:"asd"};
 	},
 	
 	render: function() {

@@ -8,17 +8,46 @@
   <body>
     <div id="example"></div>
     <script type="text/babel">
-    	
-    	var myStyle = {
-    			fontSize: 100,
-    			color: '#FF0000'
-			};	
+    var LikeButton = React.createClass({
+      getInitialState: function(){
+        return {
+          count: 60,
+          liked: true
+        };
+      },
+      handleClick: function(){
+        if(this.state.liked){
+          this.timer = setInterval(function () {
+            var count = this.state.count;
+            this.state.liked = false;
+            count -= 1;
+            if (count < 1) {
+              this.setState({
+                liked: true
+              });
+              count = 60;
+            }
+            this.setState({
+              count: count
+            });
+          }.bind(this), 1000);
+        }
+        
+      },
+      render: function(){
+        var text = this.state.liked ? '获取验证码' : this.state.count + '秒后重发';
+        return(
+          <p>
+            <button onClick={this.handleClick}>{text}</button>
+          </p>
+        )
+      }
+    })
 
-    	
-      ReactDOM.render(
-        <h1 style={myStyle}>Hello, world!</h1>,
-        document.getElementById('example')
-      );
+    ReactDOM.render(
+      <LikeButton />,
+      document.getElementById('example')
+    )
     </script>
   </body>
 </html>

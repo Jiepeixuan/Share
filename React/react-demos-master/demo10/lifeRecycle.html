@@ -49,6 +49,7 @@
             console.log('Content Component WILL RECEIVE PROPS!')
       },
       shouldComponentUpdate:function(newProps, newState) {
+      	console.log('Content shouldComponentUpdate')
             return true;
       },
       componentWillUpdate:function(nextProps, nextState) {
