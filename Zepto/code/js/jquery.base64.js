@@ -34,7 +34,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 /* base64 encode/decode compatible with window.btoa/atob
  *
@@ -58,132 +58,127 @@
  *   then an exception is thrown.
  */
 
-jQuery.base64 = ( function( $ ) {
+jQuery.base64 = (function($) {
 
-  var _PADCHAR = "=",
-    _ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
-    _VERSION = "1.0";
+	var _PADCHAR = "=",
+		_ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+		_VERSION = "1.0";
 
+	function _getbyte64(s, i) {
+		// This is oddly fast, except on Chrome/V8.
+		// Minimal or no improvement in performance by using a
+		// object with properties mapping chars to value (eg. 'A': 0)
 
-  function _getbyte64( s, i ) {
-    // This is oddly fast, except on Chrome/V8.
-    // Minimal or no improvement in performance by using a
-    // object with properties mapping chars to value (eg. 'A': 0)
+		var idx = _ALPHA.indexOf(s.charAt(i));
 
-    var idx = _ALPHA.indexOf( s.charAt( i ) );
+		if(idx === -1) {
+			throw "Cannot decode base64";
+		}
 
-    if ( idx === -1 ) {
-      throw "Cannot decode base64";
-    }
+		return idx;
+	}
 
-    return idx;
-  }
+	function _decode(s) {
+		var pads = 0,
+			i,
+			b10,
+			imax = s.length,
+			x = [];
 
+		s = String(s);
 
-  function _decode( s ) {
-    var pads = 0,
-      i,
-      b10,
-      imax = s.length,
-      x = [];
+		if(imax === 0) {
+			return s;
+		}
 
-    s = String( s );
+		if(imax % 4 !== 0) {
+			throw "Cannot decode base64";
+		}
 
-    if ( imax === 0 ) {
-      return s;
-    }
+		if(s.charAt(imax - 1) === _PADCHAR) {
+			pads = 1;
 
-    if ( imax % 4 !== 0 ) {
-      throw "Cannot decode base64";
-    }
+			if(s.charAt(imax - 2) === _PADCHAR) {
+				pads = 2;
+			}
 
-    if ( s.charAt( imax - 1 ) === _PADCHAR ) {
-      pads = 1;
+			// either way, we want to ignore this last block
+			imax -= 4;
+		}
 
-      if ( s.charAt( imax - 2 ) === _PADCHAR ) {
-	pads = 2;
-      }
+		for(i = 0; i < imax; i += 4) {
+			b10 = (_getbyte64(s, i) << 18) | (_getbyte64(s, i + 1) << 12) | (_getbyte64(s, i + 2) << 6) | _getbyte64(s, i + 3);
+			x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff, b10 & 0xff));
+		}
 
-      // either way, we want to ignore this last block
-      imax -= 4;
-    }
+		switch(pads) {
+			case 1:
+				b10 = (_getbyte64(s, i) << 18) | (_getbyte64(s, i + 1) << 12) | (_getbyte64(s, i + 2) << 6);
+				x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff));
+				break;
 
-    for ( i = 0; i < imax; i += 4 ) {
-      b10 = ( _getbyte64( s, i ) << 18 ) | ( _getbyte64( s, i + 1 ) << 12 ) | ( _getbyte64( s, i + 2 ) << 6 ) | _getbyte64( s, i + 3 );
-      x.push( String.fromCharCode( b10 >> 16, ( b10 >> 8 ) & 0xff, b10 & 0xff ) );
-    }
+			case 2:
+				b10 = (_getbyte64(s, i) << 18) | (_getbyte64(s, i + 1) << 12);
+				x.push(String.fromCharCode(b10 >> 16));
+				break;
+		}
 
-    switch ( pads ) {
-      case 1:
-	b10 = ( _getbyte64( s, i ) << 18 ) | ( _getbyte64( s, i + 1 ) << 12 ) | ( _getbyte64( s, i + 2 ) << 6 );
-	x.push( String.fromCharCode( b10 >> 16, ( b10 >> 8 ) & 0xff ) );
-	break;
+		return x.join("");
+	}
 
-      case 2:
-	b10 = ( _getbyte64( s, i ) << 18) | ( _getbyte64( s, i + 1 ) << 12 );
-	x.push( String.fromCharCode( b10 >> 16 ) );
-	break;
-    }
+	function _getbyte(s, i) {
+		var x = s.charCodeAt(i);
 
-    return x.join( "" );
-  }
+		if(x > 255) {
+			throw "INVALID_CHARACTER_ERR: DOM Exception 5";
+		}
 
+		return x;
+	}
 
-  function _getbyte( s, i ) {
-    var x = s.charCodeAt( i );
+	function _encode(s) {
+		if(arguments.length !== 1) {
+			throw "SyntaxError: exactly one argument required";
+		}
 
-    if ( x > 255 ) {
-      throw "INVALID_CHARACTER_ERR: DOM Exception 5";
-    }
+		s = String(s);
 
-    return x;
-  }
+		var i,
+			b10,
+			x = [],
+			imax = s.length - s.length % 3;
 
+		if(s.length === 0) {
+			return s;
+		}
 
-  function _encode( s ) {
-    if ( arguments.length !== 1 ) {
-      throw "SyntaxError: exactly one argument required";
-    }
+		for(i = 0; i < imax; i += 3) {
+			b10 = (_getbyte(s, i) << 16) | (_getbyte(s, i + 1) << 8) | _getbyte(s, i + 2);
+			x.push(_ALPHA.charAt(b10 >> 18));
+			x.push(_ALPHA.charAt((b10 >> 12) & 0x3F));
+			x.push(_ALPHA.charAt((b10 >> 6) & 0x3f));
+			x.push(_ALPHA.charAt(b10 & 0x3f));
+		}
 
-    s = String( s );
+		switch(s.length - imax) {
+			case 1:
+				b10 = _getbyte(s, i) << 16;
+				x.push(_ALPHA.charAt(b10 >> 18) + _ALPHA.charAt((b10 >> 12) & 0x3F) + _PADCHAR + _PADCHAR);
+				break;
 
-    var i,
-      b10,
-      x = [],
-      imax = s.length - s.length % 3;
+			case 2:
+				b10 = (_getbyte(s, i) << 16) | (_getbyte(s, i + 1) << 8);
+				x.push(_ALPHA.charAt(b10 >> 18) + _ALPHA.charAt((b10 >> 12) & 0x3F) + _ALPHA.charAt((b10 >> 6) & 0x3f) + _PADCHAR);
+				break;
+		}
 
-    if ( s.length === 0 ) {
-      return s;
-    }
+		return x.join("");
+	}
 
-    for ( i = 0; i < imax; i += 3 ) {
-      b10 = ( _getbyte( s, i ) << 16 ) | ( _getbyte( s, i + 1 ) << 8 ) | _getbyte( s, i + 2 );
-      x.push( _ALPHA.charAt( b10 >> 18 ) );
-      x.push( _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) );
-      x.push( _ALPHA.charAt( ( b10 >> 6 ) & 0x3f ) );
-      x.push( _ALPHA.charAt( b10 & 0x3f ) );
-    }
+	return {
+		decode: _decode,
+		encode: _encode,
+		VERSION: _VERSION
+	};
 
-    switch ( s.length - imax ) {
-      case 1:
-	b10 = _getbyte( s, i ) << 16;
-	x.push( _ALPHA.charAt( b10 >> 18 ) + _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) + _PADCHAR + _PADCHAR );
-	break;
-
-      case 2:
-	b10 = ( _getbyte( s, i ) << 16 ) | ( _getbyte( s, i + 1 ) << 8 );
-	x.push( _ALPHA.charAt( b10 >> 18 ) + _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) + _ALPHA.charAt( ( b10 >> 6 ) & 0x3f ) + _PADCHAR );
-	break;
-    }
-
-    return x.join( "" );
-  }
-
-
-  return {
-    decode: _decode,
-    encode: _encode,
-    VERSION: _VERSION
-  };
-
-}( jQuery ) );
+}(jQuery));
