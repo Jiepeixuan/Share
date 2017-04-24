@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>flex-wrap</title>
+		<style>
+			.flex-container {
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-flex-wrap: wrap-reverse;
+			    flex-wrap: wrap-reverse;
+			    /*-webkit-align-content: stretch;
+    			align-content: stretch;*/
+			    width: 300px;
+			    height: 250px;
+			    background-color: lightgrey;
+			}
+
+			.flex-item {
+			    background-color: cornflowerblue;
+			    width: 100px;
+			    height: 100px;
+			    margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-container">
+		  <div class="flex-item">flex item 1</div>
+		  <div class="flex-item">flex item 2</div>
+		  <div class="flex-item">flex item 3</div>  
+		</div>
+	</body>
+</html>

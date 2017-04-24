@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style> 
+			.flex-container {
+			    display: -webkit-flex;
+			    display: flex;
+			    width: 400px;
+			    height: 250px;
+			    background-color: lightgrey;
+			}
+			
+			.flex-item {
+			    background-color: cornflowerblue;
+			    width: 100px;
+			    height: 100px;
+			    margin: 10px;
+			}
+			
+			.first {
+			    -webkit-order: 1;
+			    order: 1;
+			}
+			.second {
+			    -webkit-order: 2;
+			    order: 2;
+			}
+			.third {
+			    -webkit-order: 3;
+			    order: 3;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-container">
+		  <div class="flex-item first">order 1</div>
+		  <div class="flex-item third">order 3</div>
+		  <div class="flex-item second">order 2</div>  
+		</div>
+	</body>
+</html>

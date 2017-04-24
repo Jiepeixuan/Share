@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style> 
+			.flex-container {
+			    display: -webkit-flex;
+			    display: flex;
+			    width: 600px;
+			    height: 250px;
+			    background-color: lightgrey;
+			}
+			
+			.flex-item {
+			    background-color: cornflowerblue;
+			    height: 100px;
+			    margin: 10px;
+			}
+			
+			.first {
+				-webkit-flex-grow: 1;
+			    flex-grow: 1;
+			}
+			.second {
+			    -webkit-flex-grow: 2;
+			    flex-grow: 2;
+			}
+			.third {
+			    -webkit-flex-grow: 3;
+			    flex-grow: 3;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-container">
+		  <div class="flex-item first">flex-grow 1</div>
+		  <div class="flex-item third">flex-grow 3</div>
+		  <div class="flex-item second">flex-grow 2</div>  
+		</div>
+	</body>
+</html>
