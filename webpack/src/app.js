@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import NewsList from './NewsList.js';
+import NewsList from './js/NewsList.js';
 import _ from 'lodash';
 
 

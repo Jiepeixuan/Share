@@ -1,8 +1,7 @@
 import React from 'react';
 
-import imageLogo from './img/y18.png';
-
-import './css/NewsHeader.css'
+import imageLogo from '../img/y18.png';
+import '../css/NewsHeader.css'
 
 export default class NewsHeader extends React.Component{
     render(){

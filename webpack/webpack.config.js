@@ -1,9 +1,16 @@
 var path = require('path');
 var webpack = require('webpack');
 
+
+var ROOT_PATH=path.resolve(__dirname);
+var APP_PATH=path.resolve(ROOT_PATH,'src');
+var APP_FILE=path.resolve(APP_PATH,'app');
+var BUILD_PATH=path.resolve(ROOT_PATH,'build');
+
+
 module.exports = {
     entry: {
-        bundle:__dirname+'/src/app.js',
+        app:APP_FILE
     },
     output: {
         path: __dirname + '/build',

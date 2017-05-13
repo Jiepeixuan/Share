@@ -1,9 +1,8 @@
 import React from 'react';
 
-import './css/NewsItem.css'
-
 import URL from 'url';
-import ImageGrayArrow from './img/grayarrow.png'
+import '../css/NewsItem.css'
+import ImageGrayArrow from '../img/grayarrow.png'
 
 export default class NewsItem extends React.Component {
     render() {
