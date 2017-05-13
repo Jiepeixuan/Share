@@ -13,7 +13,8 @@ module.exports = {
         app:APP_FILE
     },
     output: {
-        path: __dirname + '/build',
+        // path: __dirname + '/build',
+        path:BUILD_PATH,
         filename: '[name].js'
     },
     module:{
