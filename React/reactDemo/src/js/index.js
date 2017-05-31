@@ -1,3 +1,21 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-ReactDOM.render(<h1>34567</h1>, document.getElementById('example'));
+
+import ComponentHeader from './components/header'
+import ComponentFooter from './components/footer'
+import BodyIndex from './components/IndexBody'
+
+
+class Index extends React.Component {
+    render() {
+        return (
+            <div>
+                <ComponentHeader />
+                <BodyIndex />
+                <ComponentFooter />
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<Index />, document.getElementById("example"));
