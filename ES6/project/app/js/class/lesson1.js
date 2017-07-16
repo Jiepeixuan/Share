@@ -1,4 +1,4 @@
-function test(){
+function test1(){
     var a=2;
     console.log(a);
     const PI=3.1415926;
@@ -11,4 +11,4 @@ function test(){
     console.log(PI,k);
 }
 
-test();
+test1();
