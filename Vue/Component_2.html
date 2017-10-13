@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="https://unpkg.com/vue"></script>
+		<meta charset="UTF-8">
+		<title>Vue Component</title>
+	</head>
+
+	<body>
+		<div id="container">
+			<component2></component2>
+		</div>
+
+		<div id="container2">
+			<component2></component2>
+		</div>
+
+		<div id="container3">
+			<component2></component2>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		//1.创建一个组件构造器
+		var component3 = Vue.extend({
+			template: '<div>hello world</div>'
+		});
+
+		//2.注册组件，并指定组件的标签为<component2>
+		Vue.component('component2', component3);
+
+		//使用Vue.component()注册组件是全局的，使用components注册是局部注册
+
+		/*new Vue({
+			el: '#container1',
+			components: {
+				'component2': component3
+			}
+		});*/
+		
+		//如果使用上述，此时无法在container2 使用component2组件
+		
+
+		//3.实例化组件container
+		new Vue({
+			el: '#container'
+		});
+
+		//3.实例化组件container2
+		new Vue({
+			el: '#container2'
+		});
+
+		// 不实例化 container3 因此第三个自定义标签是不会生效的
+	</script>
+
+</html>

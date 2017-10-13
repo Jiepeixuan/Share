@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="https://unpkg.com/vue"></script>
+		<meta charset="UTF-8">
+		<title>Vue Component 使用props把数据传给子组件</title>
+	</head>
+
+	<body>
+		<div id="container1">
+			<component1 v-bind:my-name="name" v-bind:my-age="age"></component1>
+		</div>
+		<template id="myComponent">
+			<table>
+				<tr>
+					<th colspan="2">
+						子组件数据
+					</th>
+				</tr>
+				<tr>
+					<td>myName</td>
+					<td>{{ myName }}</td>
+				</tr>
+				<tr>
+					<td>myAge</td>
+					<td>{{ myAge }}</td>
+				</tr>
+			</table>
+		</template>
+
+	</body>
+
+	<script type="text/javascript">
+		//注意： 在子组件中定义prop时，使用了camelCase命名法。由于HTML特性不区分大小写，camelCase的prop用于特性时，会转为短横线隔开的，比如上面的代码：
+		//在props中定义的myName,在用作特性时需要转换为 my-name
+		new Vue({
+			el: '#container1',
+			data: {
+				name: 'longen',
+				age: 30
+			},
+			components: {
+				'component1': {
+					template: '#myComponent',
+					props: ['myName', 'myAge']
+				}
+			}
+		})
+	</script>
+
+</html>

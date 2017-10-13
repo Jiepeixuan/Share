@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="https://unpkg.com/vue"></script>
+		<meta charset="UTF-8">
+		<title>Vue Component 使用 template 标签分离js和html</title>
+	</head>
+
+	<body>
+		<div id="container1">
+			<component2></component2>
+		</div>
+		
+		<template id="myComponent">
+			<div>hello world!!!!</div>
+		</template>
+
+	</body>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '#container1',
+			components: {
+				'component2': {
+					template: '#myComponent'
+				}
+			}
+		})
+	</script>
+
+</html>

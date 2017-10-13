@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="https://unpkg.com/vue"></script>
+		<meta charset="UTF-8">
+		<title>Vue Component 使用components进行局部注册</title>
+	</head>
+
+	<body>
+		<div id="container">
+			<parent-component></parent-component>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		// 1. 创建一个组件构造器
+		var Child = Vue.extend({
+			template: '<div>hello world</div>'
+		});
+
+		var Parent = Vue.extend({
+			// 在组件内部使用<child-component>组件
+			template: '<div>hello world <child-component></child-component></div>',
+			components: {
+				// 局部注册Child组件
+				'child-component': Child
+			}
+		});
+
+		// 全局注册Parent组件
+		Vue.component('parent-component', Parent);
+
+		// 实例化组件
+		new Vue({
+			el: '#container'
+		})
+	</script>
+
+</html>
