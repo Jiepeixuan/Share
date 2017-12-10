@@ -1,14 +1,17 @@
-function test1(){
-    var a=2;
+function test(){
+    let a = 1;
     console.log(a);
-    const PI=3.1415926;
-    console.log(PI);
 
+    for(let i=1;i<3;i++){
+        console.log(i);
+    }
+
+    const PI=3.1415926;
     const k={
         a:1
     }
-    k.a=2;
+    k.b=3;
     console.log(PI,k);
 }
 
-test1();
+test();
