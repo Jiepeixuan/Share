@@ -8,6 +8,14 @@ router.get('/', function(req, res, next) {
 });
 
 /**
+ * 用户登录UI
+ */
+router.get('/login',function(req,res,next){
+  res.render('login',{title : '用户登录'});
+})
+
+
+/**
  * 用户增加的路由控制接口
  */
 router.get('/addUserAction', function(req, res, next) {
