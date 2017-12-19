@@ -3,7 +3,7 @@
  */
 // MySQL数据库配置信息
 mysql = {
-    host: '47.100.108.52',  //数据库
+    host: '',  //数据库
     user: 'root',           //访问用户
     password: 'Jpx.123456', //密码
     database:'SpringMvc',   //数据库名称
