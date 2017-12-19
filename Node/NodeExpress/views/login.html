@@ -14,7 +14,6 @@
 </head>
 <body screen_capture_injected="true">
 	<div class="container">
-	<%- message %>
 		<form class="col-sm-offset-4 col-sm-4 form-horizontal" role="form" method="post" onsubmit="return false">
 			<fieldset>
 				<legend></legend>
@@ -61,7 +60,7 @@
 		$("#login0").click(function(){ 
 			var username = $("#username").val();
 			var password = $("#password").val();
-			var data = {"uname":username,"upwd":password};
+			var data = {"tel":username,"password":password};
 			$.ajax({ 
 				url:'/login',
 				type:'post',
